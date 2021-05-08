@@ -3,16 +3,28 @@ import tkinter
 import time
 
 tk = tkinter.Tk()
-count = 0
+text_count = 0
+second = 0
+
 
 def update_clock():
-    global count
+    global text_count, second
     chars = text_1.get(0.0, "end")
     num = len(chars)
-    if num <= count:
+    if num > text_count:
+        second = 0
+        text_count = num
+        tk.after(1000, update_clock)
+        return
+    if second == 5:
         text_1.delete(1.0, END)
-    count = num
-    tk.after(5000, update_clock)
+        text_count = 0
+        tk.after(1000, update_clock)
+        return
+    second += 1
+    print(second)
+    print(text_count)
+    tk.after(1000, update_clock)
 
 
 tk.geometry("600x600")
